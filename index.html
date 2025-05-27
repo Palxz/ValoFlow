@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Valorant Lineup JSON Generator</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 20px;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      input[type="text"],
+      textarea {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #ff4655; /* Valorant Red */
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button:hover {
+        background-color: #e03c4c;
+      }
+      #lineup-list {
+        margin-top: 20px;
+        border-top: 1px solid #eee;
+        padding-top: 15px;
+      }
+      .lineup-item {
+        background-color: #f9f9f9;
+        border: 1px solid #eee;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+      }
+      .lineup-item h3 {
+        margin-top: 0;
+        color: #333;
+      }
+      .lineup-item p {
+        margin-bottom: 5px;
+        font-size: 0.9em;
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Valorant Lineup Generator</h1>
+      <p>
+        Enter lineup details and add them to the list. When ready, download the
+        JSON file.
+      </p>
+
+      <form id="lineup-form">
+        <label for="agent">Agent:</label>
+        <input
+          type="text"
+          id="agent"
+          name="agent"
+          placeholder="e.g., Sova"
+          required
+        />
+
+        <label for="map">Map:</label>
+        <input
+          type="text"
+          id="map"
+          name="map"
+          placeholder="e.g., Ascent"
+          required
+        />
+
+        <label for="site">Site:</label>
+        <input
+          type="text"
+          id="site"
+          name="site"
+          placeholder="e.g., A Site"
+          required
+        />
+
+        <label for="lineupName">Lineup Name:</label>
+        <input
+          type="text"
+          id="lineupName"
+          name="lineupName"
+          placeholder="e.g., Default A Attacker Dart"
+          required
+        />
+
+        <label for="description">Description:</label>
+        <textarea
+          id="description"
+          name="description"
+          rows="4"
+          placeholder="Detailed steps or notes for the lineup."
+        ></textarea>
+
+        <label for="videoUrl">Video URL (optional):</label>
+        <input
+          type="text"
+          id="videoUrl"
+          name="videoUrl"
+          placeholder="e.g., https://youtube.com/watch?v=123"
+        />
+
+        <label for="imageUrl">Image URL (optional):</label>
+        <input
+          type="text"
+          id="imageUrl"
+          name="imageUrl"
+          placeholder="e.g., https://example.com/lineup.jpg"
+        />
+
+        <button type="submit">Add Lineup to List</button>
+      </form>
+
+      <div id="lineup-list">
+        <h2>Current Lineups for JSON:</h2>
+        <ul id="current-lineups"></ul>
+        <button id="download-json-btn" style="margin-top: 20px">
+          Download Lineups JSON
+        </button>
+        <button
+          id="clear-list-btn"
+          style="margin-top: 20px; background-color: #888"
+        >
+          Clear List
+        </button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
