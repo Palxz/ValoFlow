@@ -3,154 +3,280 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Valorant Lineup JSON Generator</title>
+    <title>Valorant Lineup Generator</title>
+    <link rel="stylesheet" href="./css/style.css" />
     <style>
+      :root {
+        --background: #080806ff;
+        --primary: #0d1b2aff;
+        --primary-highlight: rgb(19, 39, 61);
+        --secondary: #465f62ff;
+        --accet: #707c99ff;
+        --text: #e0e1ddff;
+
+        --oxford-blue: #1b263bff;
+        --yinmn-blue: #415a77ff;
+        --silver-lake-blue: #778da9ff;
+      }
+      /*
+body{
+    margin: 0;
+    background-color: var(--background);
+}
+
+.icon{
+    width: 24px;
+    height: 24px;
+    fill: var(--text);
+}
+
+.ToolBar {
+     
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-bottom: 7px;
+    height: 38px;
+    
+    background: var(--background);
+    border-bottom: #e0e1dd1f solid 1px;
+    
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Content {
+    padding: 8px;
+    height: auto;
+    background: var(--yinmn-blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}*/
+
       body {
-        font-family: sans-serif;
-        margin: 20px;
+        background-color: var(--background);
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
       }
-      .container {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
+
+      header {
+        background-color: var(--background);
+        color: #fff;
+        padding: 1.5em;
+        text-align: center;
+        border-bottom: #e0e1dd1f solid 1px;
       }
-      label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
+
+      header nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
       }
-      input[type="text"],
-      textarea {
-        width: calc(100% - 20px);
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
+
+      header nav ul li {
+        display: inline-block;
+        margin-right: 20px;
       }
+
+      header nav a {
+        color: var(--text);
+        text-decoration: none;
+      }
+
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2em;
+        background-color: var(--background);
+        color: var(--text);
+      }
+
+      section {
+        background-color: #2020302f;
+        padding: 1em;
+        margin-bottom: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        width: 50%;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: var(--text);
+        justify-self: center;
+      }
+
       button {
-        padding: 10px 20px;
-        background-color: #ff4655; /* Valorant Red */
-        color: white;
+        background-color: var(--primary);
+        color: #fff;
         border: none;
-        border-radius: 4px;
-        cursor: pointer;
+        padding: 10px 20px;
         font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
       }
+
       button:hover {
-        background-color: #e03c4c;
+        background-color: var(--primary-highlight);
       }
-      #lineup-list {
-        margin-top: 20px;
-        border-top: 1px solid #eee;
-        padding-top: 15px;
+
+      footer {
+        background-color: #0f0f0f6f;
+        color: #fff;
+        padding: 1em;
+        text-align: center;
+        clear: both;
       }
-      .lineup-item {
-        background-color: #f9f9f9;
-        border: 1px solid #eee;
-        padding: 10px;
-        margin-bottom: 10px;
-        border-radius: 4px;
+
+      #hero {
+        width: 50%;
       }
-      .lineup-item h3 {
-        margin-top: 0;
-        color: #333;
+
+      .map-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-gap: 20px;
+        padding: 20px;
       }
-      .lineup-item p {
-        margin-bottom: 5px;
-        font-size: 0.9em;
-        color: #555;
+
+      .map-card {
+        display: block;
+        position: relative;
+        background-color: #00000000;
+        border-radius: 10px;
+        aspect-ratio: 16/9;
+        overflow: hidden;
+      }
+
+      .map-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .map-card .inner-shadow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        z-index: 1;
+      }
+
+      .map-card h3 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -100%);
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        color: #fff;
+        z-index: 2;
+      }
+
+      .map-card:hover {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); /* Add a hover effect */
+      }
+
+      .map-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.2);
+        z-index: 0;
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>Valorant Lineup Generator</h1>
-      <p>
-        Enter lineup details and add them to the list. When ready, download the
-        JSON file.
-      </p>
-
-      <form id="lineup-form">
-        <label for="agent">Agent:</label>
-        <input
-          type="text"
-          id="agent"
-          name="agent"
-          placeholder="e.g., Sova"
-          required
-        />
-
-        <label for="map">Map:</label>
-        <input
-          type="text"
-          id="map"
-          name="map"
-          placeholder="e.g., Ascent"
-          required
-        />
-
-        <label for="site">Site:</label>
-        <input
-          type="text"
-          id="site"
-          name="site"
-          placeholder="e.g., A Site"
-          required
-        />
-
-        <label for="lineupName">Lineup Name:</label>
-        <input
-          type="text"
-          id="lineupName"
-          name="lineupName"
-          placeholder="e.g., Default A Attacker Dart"
-          required
-        />
-
-        <label for="description">Description:</label>
-        <textarea
-          id="description"
-          name="description"
-          rows="4"
-          placeholder="Detailed steps or notes for the lineup."
-        ></textarea>
-
-        <label for="videoUrl">Video URL (optional):</label>
-        <input
-          type="text"
-          id="videoUrl"
-          name="videoUrl"
-          placeholder="e.g., https://youtube.com/watch?v=123"
-        />
-
-        <label for="imageUrl">Image URL (optional):</label>
-        <input
-          type="text"
-          id="imageUrl"
-          name="imageUrl"
-          placeholder="e.g., https://example.com/lineup.jpg"
-        />
-
-        <button type="submit">Add Lineup to List</button>
-      </form>
-
-      <div id="lineup-list">
-        <h2>Current Lineups for JSON:</h2>
-        <ul id="current-lineups"></ul>
-        <button id="download-json-btn" style="margin-top: 20px">
-          Download Lineups JSON
-        </button>
-        <button
-          id="clear-list-btn"
-          style="margin-top: 20px; background-color: #888"
-        >
-          Clear List
-        </button>
-      </div>
-    </div>
-
-    <script src="script.js"></script>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="#lineups">Lineups</a></li>
+          <li><a href="#agents">Agents</a></li>
+          <li><a href="#maps">Maps</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section id="hero">
+        <h1>Valorant Lineup Generator</h1>
+        <p>Create and share your favorite lineups for Valorant</p>
+        <button>Get Started</button>
+      </section>
+      <section id="maps">
+        <h2>Maps</h2>
+        <div class="map-grid">
+          <a href="#" class="map-card">
+            <img src="./src/img/maps/Abyss.webp" alt="Abyss" />
+            <div class="inner-shadow"></div>
+            <h3>Abyss</h3>
+          </a>
+          <a href="#" class="map-card">
+            <img src="./src/img/maps/Ascent.webp" alt="Ascent" />
+            <div class="inner-shadow"></div>
+            <h3>Ascent</h3>
+          </a>
+          <a href="#" class="map-card">
+            <img src="./src/img/maps/bind.webp" alt="Bind" />
+            <div class="inner-shadow"></div>
+            <h3>Bind</h3>
+          </a>
+          <a href="#" class="map-card">
+            <img src="./src/img/maps/Breeze.webp" alt="Breeze" />
+            <div class="inner-shadow"></div>
+            <h3>Breeze</h3>
+          </a>
+          <a href="#" class="map-card">
+            <img src="./src/img/maps/Fracture.webp" alt="Fracture" />
+            <div class="inner-shadow"></div>
+            <h3>Fracture</h3>
+          </a>
+          <a href="#" class="map-card">
+            <img src="./src/img/maps/haven.webp" alt="Haven" />
+            <div class="inner-shadow"></div>
+            <h3>Haven</h3>
+          </a>
+          <a href="#" class="map-card">
+            <img src="./src/img/maps/icebox.webp" alt="Icebox" />
+            <div class="inner-shadow"></div>
+            <h3>Icebox</h3>
+          </a>
+          <a href="#" class="map-card">
+            <img src="./src/img/maps/Lotus.webp" alt="Lotus" />
+            <div class="inner-shadow"></div>
+            <h3>Lotus</h3>
+          </a>
+          <a href="#" class="map-card">
+            <img src="./src/img/maps/Pearl.webp" alt="Pearl" />
+            <div class="inner-shadow"></div>
+            <h3>Pearl</h3>
+          </a>
+          <a href="#" class="map-card">
+            <img src="./src/img/maps/split.webp" alt="Split" />
+            <div class="inner-shadow"></div>
+            <h3>Split</h3>
+          </a>
+          <a href="#" class="map-card">
+            <img src="./src/img/maps/Sunset.webp" alt="Sunset" />
+            <div class="inner-shadow"></div>
+            <h3>Sunset</h3>
+          </a>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2025 Valoflow LineUp Generator</p>
+    </footer>
   </body>
 </html>
